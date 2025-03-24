@@ -69,15 +69,15 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-	pmap_unset (CocineroPedidos, CocineroPedidos_version);
+	pmap_unset (COCINEROPEDIDOS, COCINEROPEDIDOS_VERS);
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, CocineroPedidos, CocineroPedidos_version, cocineropedidos_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (CocineroPedidos, CocineroPedidos_version, udp).");
+	if (!svc_register(transp, COCINEROPEDIDOS, COCINEROPEDIDOS_VERS, cocineropedidos_1, IPPROTO_UDP)) {
+		fprintf (stderr, "%s", "unable to register (COCINEROPEDIDOS, COCINEROPEDIDOS_VERS, udp).");
 		exit(1);
 	}
 
@@ -86,8 +86,8 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, CocineroPedidos, CocineroPedidos_version, cocineropedidos_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (CocineroPedidos, CocineroPedidos_version, tcp).");
+	if (!svc_register(transp, COCINEROPEDIDOS, COCINEROPEDIDOS_VERS, cocineropedidos_1, IPPROTO_TCP)) {
+		fprintf (stderr, "%s", "unable to register (COCINEROPEDIDOS, COCINEROPEDIDOS_VERS, tcp).");
 		exit(1);
 	}
 

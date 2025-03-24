@@ -6,16 +6,17 @@
 #ifndef _INTERFACECOCINEROSERVIDORPEDIDOS_H_RPCGEN
 #define _INTERFACECOCINEROSERVIDORPEDIDOS_H_RPCGEN
 
-#include <rpc/rpc.h>
+#include <tirpc/rpc/rpc.h>
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#define MAX_ID 20
 
-#define CocineroPedidos 0x20000003
-#define CocineroPedidos_version 1
+#define COCINEROPEDIDOS 0x20000003
+#define COCINEROPEDIDOS_VERS 1
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define registrar_cocinero 1
@@ -41,3 +42,4 @@ extern int cocineropedidos_1_freeresult ();
 #endif
 
 #endif /* !_INTERFACECOCINEROSERVIDORPEDIDOS_H_RPCGEN */
+#define COCINEROPEDIDOS_PROG ((u_long)0x20000003)

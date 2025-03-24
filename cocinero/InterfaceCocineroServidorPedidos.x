@@ -1,9 +1,9 @@
-program CocineroPedidos {
-    version CocineroPedidos_version {
-        /* Operación para que el cocinero se registre */
-        int registrar_cocinero(int id_cocinero) = 1;
+/* InterfaceCocineroServidorPedidos.x */
+const MAX_ID = 20;
 
-        /* Operación para notificar que terminó un pedido */
-        bool notificar_pedido_terminado(int id_cocinero) = 2;
+program COCINEROPEDIDOS {
+    version COCINEROPEDIDOS_VERS {
+        int registrar_cocinero(int) = 1;
+        bool notificar_pedido_terminado(int) = 2;
     } = 1;
-} = 0x20000003; 
+} = 0x20000003;

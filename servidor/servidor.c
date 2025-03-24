@@ -92,3 +92,29 @@ int *generarturno_1_svc(nodo_hamburguesa *argp, struct svc_req *rqstp)
 	printf("\n");
 	return &result;
 }
+// Cocinero 
+// Registrar
+int *registrar_cocinero_1_svc(int *id_cocinero, struct svc_req *req) {
+    static int resultado;
+    if (*id_cocinero < 1 || *id_cocinero > 3) {
+        resultado = 0; // ID inválido
+    } else if (cocineros[*id_cocinero - 1].ocupado) {
+        resultado = 0; // ID ya en uso
+    } else {
+        cocineros[*id_cocinero - 1].ocupado = true; // Marcar como ocupado (aunque no tenga pedido aún)
+        resultado = 1; // Éxito
+    }
+    return &resultado;
+}
+// Notificar pedido terminado
+bool *notificar_pedido_terminado_1_svc(int *id_cocinero, struct svc_req *req) {
+    static bool resultado;
+    if (*id_cocinero < 1 || *id_cocinero > 3) {
+        resultado = false; // Error: ID inválido
+    } else {
+        // Liberar al cocinero y asignar nuevo pedido de la fila (si existe)
+        liberar_cocinero(*id_cocinero);
+        resultado = true;
+    }
+    return &resultado;
+}
