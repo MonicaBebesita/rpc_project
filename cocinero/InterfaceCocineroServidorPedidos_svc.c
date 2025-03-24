@@ -17,12 +17,11 @@
 #endif
 
 static void
-prog_cocineros_1(struct svc_req *rqstp, register SVCXPRT *transp)
+autorizar_cocineros_1(struct svc_req *rqstp, register SVCXPRT *transp)
 {
 	union {
-		info_cocinero registrar_cocinero_1_arg;
-		int notificar_completado_1_arg;
-		int obtener_proximo_pedido_1_arg;
+		int seleccionaridcocinero_1_arg;
+		int terminarpedido_1_arg;
 	} argument;
 	char *result;
 	xdrproc_t _xdr_argument, _xdr_result;
@@ -33,22 +32,16 @@ prog_cocineros_1(struct svc_req *rqstp, register SVCXPRT *transp)
 		(void) svc_sendreply (transp, (xdrproc_t) xdr_void, (char *)NULL);
 		return;
 
-	case registrar_cocinero:
-		_xdr_argument = (xdrproc_t) xdr_info_cocinero;
-		_xdr_result = (xdrproc_t) xdr_bool;
-		local = (char *(*)(char *, struct svc_req *)) registrar_cocinero_1_svc;
+	case seleccionarIdCocinero:
+		_xdr_argument = (xdrproc_t) xdr_int;
+		_xdr_result = (xdrproc_t) xdr_int;
+		local = (char *(*)(char *, struct svc_req *)) seleccionaridcocinero_1_svc;
 		break;
 
-	case notificar_completado:
+	case terminarPedido:
 		_xdr_argument = (xdrproc_t) xdr_int;
-		_xdr_result = (xdrproc_t) xdr_bool;
-		local = (char *(*)(char *, struct svc_req *)) notificar_completado_1_svc;
-		break;
-
-	case obtener_proximo_pedido:
-		_xdr_argument = (xdrproc_t) xdr_int;
-		_xdr_result = (xdrproc_t) xdr_pedido_asignado;
-		local = (char *(*)(char *, struct svc_req *)) obtener_proximo_pedido_1_svc;
+		_xdr_result = (xdrproc_t) xdr_int;
+		local = (char *(*)(char *, struct svc_req *)) terminarpedido_1_svc;
 		break;
 
 	default:
@@ -76,15 +69,15 @@ main (int argc, char **argv)
 {
 	register SVCXPRT *transp;
 
-	pmap_unset (PROG_COCINEROS, VER_COCINEROS_1);
+	pmap_unset (autorizar_cocineros, autorizar_cocineros_version);
 
 	transp = svcudp_create(RPC_ANYSOCK);
 	if (transp == NULL) {
 		fprintf (stderr, "%s", "cannot create udp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, PROG_COCINEROS, VER_COCINEROS_1, prog_cocineros_1, IPPROTO_UDP)) {
-		fprintf (stderr, "%s", "unable to register (PROG_COCINEROS, VER_COCINEROS_1, udp).");
+	if (!svc_register(transp, autorizar_cocineros, autorizar_cocineros_version, autorizar_cocineros_1, IPPROTO_UDP)) {
+		fprintf (stderr, "%s", "unable to register (autorizar_cocineros, autorizar_cocineros_version, udp).");
 		exit(1);
 	}
 
@@ -93,8 +86,8 @@ main (int argc, char **argv)
 		fprintf (stderr, "%s", "cannot create tcp service.");
 		exit(1);
 	}
-	if (!svc_register(transp, PROG_COCINEROS, VER_COCINEROS_1, prog_cocineros_1, IPPROTO_TCP)) {
-		fprintf (stderr, "%s", "unable to register (PROG_COCINEROS, VER_COCINEROS_1, tcp).");
+	if (!svc_register(transp, autorizar_cocineros, autorizar_cocineros_version, autorizar_cocineros_1, IPPROTO_TCP)) {
+		fprintf (stderr, "%s", "unable to register (autorizar_cocineros, autorizar_cocineros_version, tcp).");
 		exit(1);
 	}
 
