@@ -92,6 +92,7 @@ int *generarturno_1_svc(nodo_hamburguesa *argp, struct svc_req *rqstp)
 	printf("\n");
 	return &result;
 }
+/** 
 // Cocinero 
 // Registrar
 int *registrar_cocinero_1_svc(int *id_cocinero, struct svc_req *req) {
@@ -118,3 +119,4 @@ bool *notificar_pedido_terminado_1_svc(int *id_cocinero, struct svc_req *req) {
     }
     return &resultado;
 }
+**/
