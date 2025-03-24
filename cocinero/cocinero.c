@@ -5,27 +5,78 @@
  */
 
 #include "InterfaceCocineroServidorPedidos.h"
+#include <stdio.h>
+#include <stdlib.h> 
 
-int *
-seleccionaridcocinero_1_svc(int *argp, struct svc_req *rqstp)
+void
+autorizar_cocineros_1(char *host)
 {
-	static int  result;
+	CLIENT *clnt;
+	int  *result_validarCocinero;
+	int  id_cocinero;
+	int  *result_terminarPedido;
 
-	/*
-	 * insert server code here
-	 */
-
-	return &result;
+	#ifndef	DEBUG
+	clnt = clnt_create (host, autorizar_cocineros, autorizar_cocineros_version, "udp");
+	if (clnt == NULL) {
+		clnt_pcreateerror (host);
+		exit (1);
+	}
+	#endif	/* DEBUG */
+	printf("\n =====PANEL-COCINERO=====");
+	printf("\n Ingrese el id del cocinero: ");
+	scanf("%d", &id_cocinero);
+	id_cocinero = id_cocinero;
+	printf("\n\n");
+	result_validarCocinero = seleccionaridcocinero_1(&id_cocinero, clnt);
+	if (result_validarCocinero == (int *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	if(*result_validarCocinero == 0){
+		printf("\n\nEl id del cocinero no es valido o ya esta en uso");
+	}
+	else{
+		printf("\n\nEl id del cocinero fue registrado con exito");
+	}	
+	while(1){
+		printf("\n\n");
+		printf("\n 1, Terminar pedido");
+		printf("\n 0. salir");
+		printf("\n\n");
+		scanf("%d", &opcion);
+		if(opcion == 1){
+			result_terminarPedido = terminarpedido_1(&id_cocinero, clnt);
+			if (result_terminarPedido == (int *) NULL) {
+				clnt_perror (clnt, "call failed");
+			}
+			if(*result_terminarPedido == 0){
+				printf("\n\nNo hay pedidos pendientes");
+			}
+			else{
+				printf("\n\nEl pedido fue terminado con exito");
+			}
+		}
+		else if(opcion == 0){
+			printf("\n\nCocinero saliendo del sistema");
+			break;
+		}
+	}
+	clnt_destroy (clnt);
 }
 
-int *
-terminarpedido_1_svc(int *argp, struct svc_req *rqstp)
+int
+main (int argc, char *argv[])
 {
-	static int  result;
+	char *host;
 
-	/*
-	 * insert server code here
-	 */
+	if (argc < 2) {
+		printf("usage: %s server_host\n", argv[0]);
+		exit (1);
+	}
+	host = argv[1];
 
-	return &result;
+
+	autorizar_cocineros_1 (host);
+	
+exit (0);
 }
