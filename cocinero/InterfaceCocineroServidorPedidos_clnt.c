@@ -9,15 +9,15 @@
 /* Default timeout can be changed using clnt_control() */
 static struct timeval TIMEOUT = { 25, 0 };
 
-int *
-registrar_cocinero_1(int *argp, CLIENT *clnt)
+bool_t *
+registrar_cocinero_1(info_cocinero *argp, CLIENT *clnt)
 {
-	static int clnt_res;
+	static bool_t clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
 	if (clnt_call (clnt, registrar_cocinero,
-		(xdrproc_t) xdr_int, (caddr_t) argp,
-		(xdrproc_t) xdr_int, (caddr_t) &clnt_res,
+		(xdrproc_t) xdr_info_cocinero, (caddr_t) argp,
+		(xdrproc_t) xdr_bool, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
@@ -25,14 +25,29 @@ registrar_cocinero_1(int *argp, CLIENT *clnt)
 }
 
 bool_t *
-notificar_pedido_terminado_1(int *argp, CLIENT *clnt)
+notificar_completado_1(int *argp, CLIENT *clnt)
 {
 	static bool_t clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call (clnt, notificar_pedido_terminado,
+	if (clnt_call (clnt, notificar_completado,
 		(xdrproc_t) xdr_int, (caddr_t) argp,
 		(xdrproc_t) xdr_bool, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
+
+pedido_asignado *
+obtener_proximo_pedido_1(int *argp, CLIENT *clnt)
+{
+	static pedido_asignado clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, obtener_proximo_pedido,
+		(xdrproc_t) xdr_int, (caddr_t) argp,
+		(xdrproc_t) xdr_pedido_asignado, (caddr_t) &clnt_res,
 		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
 	}
