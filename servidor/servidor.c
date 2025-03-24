@@ -28,42 +28,41 @@ int consultarNumeroCocineroDisponible()
 	return posicion;
 }
 
-void
- notificar_cocineros_1()
- {
-     CLIENT *datosConexion;
-     void  *result_1;
-     char ipServidor[10];
-	 strcpy(ipServidor,"localhost");
-     notificacion  objNotificacion;
- 
- #ifndef DEBUG
- //Obtener la ubicacion dle servidor display
-     datosConexion = clnt_create (ipServidor, notificar_cocineros, notificar_cocineros_version, "udp");
-     if (datosConexion == NULL) {
-         clnt_pcreateerror (ipServidor);
-         exit (1);
-     }
- #endif  /* DEBUG */
-     for(int i =0; i<3; i++){
-         objNotificacion.cocineros[i].noCocinero=vectorCocineros[i].noCocinero;
-         objNotificacion.cocineros[i].ocupado=vectorCocineros[i].ocupado;
-         objNotificacion.cocineros[i].objHamburguesaAPreparar.cantidadIngredientesExtra=vectorCocineros[i].objHamburguesaAPreparar.cantidadIngredientesExtra;
-         strcpy(objNotificacion.cocineros[i].objHamburguesaAPreparar.nombreHamburguesa,
-         vectorCocineros[i].objHamburguesaAPreparar.nombreHamburguesa);
-         objNotificacion.cocineros[i].objHamburguesaAPreparar.tipoHamburguesa=vectorCocineros[i].objHamburguesaAPreparar.tipoHamburguesa;
-     }
-     objNotificacion.cantidadUsuariosFilaVirtual=cantidadUsuariosFila;
-     //enviar la notificacion
-     result_1 = enviarnotificacion_1(&objNotificacion, datosConexion);
-     if (result_1 == (void *) NULL) {
-         clnt_perror (datosConexion, "call failed");
-     }
- #ifndef DEBUG
- //eliminar recursos utilizados en la conexion
-     clnt_destroy (datosConexion);
- #endif   /* DEBUG */
- }
+void notificar_cocineros_1()
+{
+	CLIENT *datosConexion;
+	void  *result_1;
+	char ipServidor[10];
+	strcpy(ipServidor,"localhost");
+	notificacion  objNotificacion;
+
+#ifndef DEBUG
+//Obtener la ubicacion dle servidor display
+	datosConexion = clnt_create (ipServidor, notificar_cocineros, notificar_cocineros_version, "udp");
+	if (datosConexion == NULL) {
+		clnt_pcreateerror (ipServidor);
+		exit (1);
+	}
+#endif  /* DEBUG */
+	for(int i =0; i<3; i++){
+		objNotificacion.cocineros[i].noCocinero=vectorCocineros[i].noCocinero;
+		objNotificacion.cocineros[i].ocupado=vectorCocineros[i].ocupado;
+		objNotificacion.cocineros[i].objHamburguesaAPreparar.cantidadIngredientesExtra=vectorCocineros[i].objHamburguesaAPreparar.cantidadIngredientesExtra;
+		strcpy(objNotificacion.cocineros[i].objHamburguesaAPreparar.nombreHamburguesa,
+		vectorCocineros[i].objHamburguesaAPreparar.nombreHamburguesa);
+		objNotificacion.cocineros[i].objHamburguesaAPreparar.tipoHamburguesa=vectorCocineros[i].objHamburguesaAPreparar.tipoHamburguesa;
+	}
+	objNotificacion.cantidadUsuariosFilaVirtual=cantidadUsuariosFila;
+	//enviar la notificacion
+	result_1 = enviarnotificacion_1(&objNotificacion, datosConexion);
+	if (result_1 == (void *) NULL) {
+		clnt_perror (datosConexion, "call failed");
+	}
+#ifndef DEBUG
+//eliminar recursos utilizados en la conexion
+	clnt_destroy (datosConexion);
+#endif   /* DEBUG */
+}
 
 int *generarturno_1_svc(nodo_hamburguesa *argp, struct svc_req *rqstp)
 {
