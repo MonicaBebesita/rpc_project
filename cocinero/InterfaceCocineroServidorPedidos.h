@@ -14,7 +14,7 @@ extern "C" {
 #endif
 
 
-#define autorizar_cocineros 0x20000003
+#define autorizar_cocineros 536870913
 #define autorizar_cocineros_version 1
 
 #if defined(__STDC__) || defined(__cplusplus)
