@@ -3,13 +3,11 @@
  * These are only templates and you can use them
  * as a guideline for developing your own functions.
  */
-
 #include "InterfaceCocineroServidorPedidos.h"
 #include <stdio.h>
 #include <stdlib.h> 
 
-void
-autorizar_cocineros_1(char *host)
+void autorizar_cocineros_1(char *host)
 {
 	CLIENT *clnt;
 	int  *result_validarCocinero;
@@ -17,7 +15,7 @@ autorizar_cocineros_1(char *host)
 	int  *result_terminarPedido;
 
 	#ifndef	DEBUG
-	clnt = clnt_create (host, autorizar_cocineros, autorizar_cocineros_version, "udp");
+	clnt = clnt_create(host, autorizar_cocineros, autorizar_cocineros_version, "udp");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
@@ -39,6 +37,8 @@ autorizar_cocineros_1(char *host)
 		printf("\n\nEl id del cocinero fue registrado con exito");
 	}	
 	while(1){
+		int opcion=-1;
+		printf("\n =====MENU-COCINERO=====");
 		printf("\n\n");
 		printf("\n 1, Terminar pedido");
 		printf("\n 0. salir");
@@ -64,8 +64,7 @@ autorizar_cocineros_1(char *host)
 	clnt_destroy (clnt);
 }
 
-int
-main (int argc, char *argv[])
+int main (int argc, char *argv[])
 {
 	char *host;
 
@@ -76,7 +75,7 @@ main (int argc, char *argv[])
 	host = argv[1];
 
 
-	autorizar_cocineros_1 (host);
+	autorizar_cocineros_1(host);
 	
 exit (0);
 }

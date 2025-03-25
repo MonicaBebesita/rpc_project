@@ -3,8 +3,8 @@
 
 # Parameters
 
-CLIENT = InterfaceCocineroServidorPedidos_client
-SERVER = InterfaceCocineroServidorPedidos_server
+CLIENT = cocinero
+SERVER = 
 
 SOURCES_CLNT.c = cocinero.c
 SOURCES_CLNT.h = InterfaceCocineroServidorPedidos.h
@@ -21,9 +21,8 @@ OBJECTS_SVC = $(SOURCES_SVC.c:%.c=%.o) $(TARGETS_SVC.c:%.c=%.o)
 # Compiler flags 
 
 CFLAGS += -g -I /usr/include/tirpc
-LDLIBS += -lnsl
+LDLIBS += -lnsl -ltirpc
 RPCGENFLAGS = 
-
 # Targets 
 
 all : $(CLIENT) $(SERVER)
