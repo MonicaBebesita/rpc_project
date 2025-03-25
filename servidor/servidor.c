@@ -169,19 +169,3 @@ int * terminarpedido_1_svc(int *argp, struct svc_req *rqstp) {
 	result = 1;
 	return &result;
 }
-
-int main() {
-    SVCXPRT *transp = svcudp_create(RPC_ANYSOCK);  // Socket UDP
-    if (!transp) {
-        fprintf(stderr, "Error al crear transporte UDP\n");
-        exit(1);
-    }
-
-    // Registra el programa y versión (usando el nombre generado en .h)
-    svc_register(transp, autorizar_cocineros, autorizar_cocineros_version, IPPROTO_UDP);
-
-    printf("Servidor RPC iniciado. Programa: 0x%08x\n", autorizar_cocineros);
-
-    svc_run();  // Bucle infinito (¡nunca debe retornar!)
-    return 0;
-}

@@ -14,7 +14,7 @@ SOURCES.x = InterfaceCocineroServidorPedidos.x
 
 TARGETS_SVC.c = InterfaceCocineroServidorPedidos_svc.c     
 TARGETS_CLNT.c = InterfaceCocineroServidorPedidos_clnt.c     
-TARGETS = InterfaceCocineroServidorPedidos.h   InterfaceCocineroServidorPedidos_clnt.c InterfaceCocineroServidorPedidos_svc.c    
+TARGETS = InterfaceCocineroServidorPedidos.h InterfaceCocineroServidorPedidos_clnt.c InterfaceCocineroServidorPedidos_svc.c    
 
 OBJECTS_CLNT = $(SOURCES_CLNT.c:%.c=%.o) $(TARGETS_CLNT.c:%.c=%.o)
 OBJECTS_SVC = $(SOURCES_SVC.c:%.c=%.o) $(TARGETS_SVC.c:%.c=%.o)
